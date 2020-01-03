@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package rpc;
+
+import "user.message.proto";
+
+service User{
+    rpc UserLogin(Credentials) returns (LoginResult){};
+}
