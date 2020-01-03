@@ -6,14 +6,14 @@ import (
 	"fmt"
 )
 
-type user_server struct {
+type user_service struct {
 }
 
-func NewUserGRPCServer() *user_server {
-	return &user_server{}
+func NewUserGRPCService() *user_service {
+	return &user_service{}
 }
 
-func (*user_server) UserLogin(ctx context.Context, in *rpc.Credentials) (*rpc.LoginResult, error) {
+func (*user_service) UserLogin(ctx context.Context, in *rpc.Credentials) (*rpc.LoginResult, error) {
 	fmt.Println(in)
 	return &rpc.LoginResult{
 		Ok: true,
@@ -22,7 +22,7 @@ func (*user_server) UserLogin(ctx context.Context, in *rpc.Credentials) (*rpc.Lo
 		},
 	}, nil
 }
-func (*user_server) UserRegister(ctx context.Context, in *rpc.Credentials) (*rpc.LoginResult, error) {
+func (*user_service) UserRegister(ctx context.Context, in *rpc.Credentials) (*rpc.LoginResult, error) {
 	fmt.Println(in)
 	return &rpc.LoginResult{
 		Ok: true,

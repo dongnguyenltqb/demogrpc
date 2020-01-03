@@ -16,11 +16,11 @@ func runGRPCServer() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	// list all rpc server to register
+	// list all rpc service to register
 	var (
-		user = entity.NewUserGRPCServer()
+		user = entity.NewUserGRPCService()
 	)
-	// create a server instance
+	// create a server instance and register service to server
 	grpcServer := grpc.NewServer()
 	rpc.RegisterUserServer(grpcServer, user)
 
