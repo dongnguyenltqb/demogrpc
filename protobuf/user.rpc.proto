@@ -6,4 +6,5 @@ import "user.message.proto";
 
 service User{
     rpc UserLogin(Credentials) returns (LoginResult){};
+    rpc UserRegister(Credentials) returns (LoginResult){};
 }

@@ -62,6 +62,29 @@ func Start() {
 			}
 			c.JSON(200, response)
 		})
+		u.POST("/register", func(c *gin.Context) {
+			var cre Credentials
+			if err := c.BindJSON(&cre); err != nil {
+				fmt.Println(err)
+				c.JSON(400, gin.H{
+					"Ok":      false,
+					"Message": err.Error(),
+				})
+				return
+			}
+			response, err := cli.UserRegister(context.Background(), &rpc.Credentials{
+				Username: cre.Email,
+				Password: cre.Password,
+			})
+			if err != nil {
+				c.JSON(500, gin.H{
+					"Ok":      false,
+					"Message": err.Error(),
+				})
+				return
+			}
+			c.JSON(200, response)
+		})
 	}
 	app.Run(":7000")
 }
