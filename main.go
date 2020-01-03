@@ -1,6 +1,7 @@
 package main
 
 import (
+	"demogrpc/entity"
 	"demogrpc/rpc"
 	server "demogrpc/server"
 	"fmt"
@@ -15,10 +16,13 @@ func runGRPCServer() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+	// list all rpc server to register
+	var (
+		user = entity.NewUserGRPCServer()
+	)
 	// create a server instance
-	s := rpc.Server{}
 	grpcServer := grpc.NewServer()
-	rpc.RegisterUserServer(grpcServer, &s)
+	rpc.RegisterUserServer(grpcServer, user)
 
 	// start the server
 	fmt.Println("gRPC server is running....")
