@@ -15,3 +15,17 @@ message LoginResult{
     bool ok = 1;
     AccessToken data = 2;
 }
+
+message FormRegister{
+    string first_name = 1;
+    string last_nane = 2;
+    string email = 3;
+    string password  =4;
+    string phone_number = 5;
+    string address = 6;
+}
+
+message RegisterResult{
+    bool ok  = 1;
+    AccessToken data = 2;
+}

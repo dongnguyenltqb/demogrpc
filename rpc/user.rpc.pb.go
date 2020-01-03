@@ -27,15 +27,16 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 func init() { proto.RegisterFile("user.rpc.proto", fileDescriptor_edfd371b7eecadb7) }
 
 var fileDescriptor_edfd371b7eecadb7 = []byte{
-	// 126 bytes of a gzipped FileDescriptorProto
+	// 141 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2b, 0x2d, 0x4e, 0x2d,
 	0xd2, 0x2b, 0x2a, 0x48, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0x48, 0x96,
-	0x12, 0x02, 0x0b, 0xe6, 0xa6, 0x16, 0x17, 0x27, 0xa6, 0xa7, 0x42, 0x24, 0x8c, 0xf2, 0xb9, 0x58,
+	0x12, 0x02, 0x0b, 0xe6, 0xa6, 0x16, 0x17, 0x27, 0xa6, 0xa7, 0x42, 0x24, 0x8c, 0x8a, 0xb9, 0x58,
 	0x42, 0x8b, 0x53, 0x8b, 0x84, 0x0c, 0xb9, 0x38, 0x41, 0xb4, 0x4f, 0x7e, 0x7a, 0x66, 0x9e, 0x90,
 	0x00, 0x58, 0xa7, 0x73, 0x51, 0x6a, 0x4a, 0x6a, 0x5e, 0x49, 0x66, 0x62, 0x4e, 0xb1, 0x14, 0x44,
-	0x04, 0x2c, 0x1b, 0x94, 0x5a, 0x5c, 0x9a, 0x53, 0xa2, 0xc4, 0x20, 0x64, 0xc2, 0xc5, 0x03, 0xd2,
-	0x12, 0x94, 0x9a, 0x9e, 0x59, 0x5c, 0x92, 0x5a, 0x44, 0x9c, 0xae, 0x24, 0x36, 0xb0, 0xbd, 0xc6,
-	0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x48, 0x9d, 0x6a, 0x02, 0xa2, 0x00, 0x00, 0x00,
+	0x04, 0x2c, 0x1b, 0x94, 0x5a, 0x5c, 0x9a, 0x53, 0xa2, 0xc4, 0x20, 0x64, 0xc1, 0xc5, 0x03, 0xd2,
+	0x12, 0x94, 0x9a, 0x9e, 0x59, 0x5c, 0x92, 0x5a, 0x24, 0x24, 0x08, 0x56, 0xe3, 0x96, 0x5f, 0x94,
+	0x0b, 0x13, 0x92, 0x12, 0x06, 0x0b, 0xc1, 0xb8, 0x30, 0x9d, 0x49, 0x6c, 0x60, 0xbb, 0x8d, 0x01,
+	0x01, 0x00, 0x00, 0xff, 0xff, 0x18, 0x70, 0x9c, 0x8e, 0xa6, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -51,7 +52,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type UserClient interface {
 	UserLogin(ctx context.Context, in *Credentials, opts ...grpc.CallOption) (*LoginResult, error)
-	UserRegister(ctx context.Context, in *Credentials, opts ...grpc.CallOption) (*LoginResult, error)
+	UserRegister(ctx context.Context, in *FormRegister, opts ...grpc.CallOption) (*RegisterResult, error)
 }
 
 type userClient struct {
@@ -71,8 +72,8 @@ func (c *userClient) UserLogin(ctx context.Context, in *Credentials, opts ...grp
 	return out, nil
 }
 
-func (c *userClient) UserRegister(ctx context.Context, in *Credentials, opts ...grpc.CallOption) (*LoginResult, error) {
-	out := new(LoginResult)
+func (c *userClient) UserRegister(ctx context.Context, in *FormRegister, opts ...grpc.CallOption) (*RegisterResult, error) {
+	out := new(RegisterResult)
 	err := c.cc.Invoke(ctx, "/rpc.User/UserRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -83,7 +84,7 @@ func (c *userClient) UserRegister(ctx context.Context, in *Credentials, opts ...
 // UserServer is the server API for User service.
 type UserServer interface {
 	UserLogin(context.Context, *Credentials) (*LoginResult, error)
-	UserRegister(context.Context, *Credentials) (*LoginResult, error)
+	UserRegister(context.Context, *FormRegister) (*RegisterResult, error)
 }
 
 // UnimplementedUserServer can be embedded to have forward compatible implementations.
@@ -93,7 +94,7 @@ type UnimplementedUserServer struct {
 func (*UnimplementedUserServer) UserLogin(ctx context.Context, req *Credentials) (*LoginResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLogin not implemented")
 }
-func (*UnimplementedUserServer) UserRegister(ctx context.Context, req *Credentials) (*LoginResult, error) {
+func (*UnimplementedUserServer) UserRegister(ctx context.Context, req *FormRegister) (*RegisterResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserRegister not implemented")
 }
 
@@ -120,7 +121,7 @@ func _User_UserLogin_Handler(srv interface{}, ctx context.Context, dec func(inte
 }
 
 func _User_UserRegister_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Credentials)
+	in := new(FormRegister)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func _User_UserRegister_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/rpc.User/UserRegister",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UserRegister(ctx, req.(*Credentials))
+		return srv.(UserServer).UserRegister(ctx, req.(*FormRegister))
 	}
 	return interceptor(ctx, in, info, handler)
 }

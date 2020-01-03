@@ -15,11 +15,20 @@ type Credentials struct {
 	Password string `json:"password"`
 }
 
+type FormRegister struct {
+	FirstName   string `json:"first_name" binding:"required"`
+	LastName    string `json:"last_name" bindding:"required"`
+	Email       string `json:"email" binding:"required"`
+	Password    string `json:"password" binding:"required"`
+	PhoneNumber string `json:"phone_number" binding:"required"`
+	Address     string `json:"address" binding:"required"`
+}
+
 type GRPCClient struct {
 	UserRPCClient rpc.UserClient
 }
 
-var GRPC_CLI GRPCClient
+var GRPC_CLI *GRPCClient
 
 func createGRPCClient() {
 	conn, err := grpc.Dial(":7777", grpc.WithInsecure())
@@ -27,7 +36,7 @@ func createGRPCClient() {
 		log.Fatalf("did not connect: %s", err)
 	}
 
-	GRPC_CLI = GRPCClient{
+	GRPC_CLI = &GRPCClient{
 		UserRPCClient: rpc.NewUserClient(conn),
 	}
 }
@@ -63,8 +72,8 @@ func Start() {
 			c.JSON(200, response)
 		})
 		u.POST("/register", func(c *gin.Context) {
-			var cre Credentials
-			if err := c.BindJSON(&cre); err != nil {
+			var info FormRegister
+			if err := c.BindJSON(&info); err != nil {
 				fmt.Println(err)
 				c.JSON(400, gin.H{
 					"Ok":      false,
@@ -72,9 +81,13 @@ func Start() {
 				})
 				return
 			}
-			response, err := cli.UserRegister(context.Background(), &rpc.Credentials{
-				Username: cre.Email,
-				Password: cre.Password,
+			response, err := cli.UserRegister(context.Background(), &rpc.FormRegister{
+				FirstName:   info.FirstName,
+				LastNane:    info.LastName,
+				Email:       info.Email,
+				Password:    info.Password,
+				PhoneNumber: info.PhoneNumber,
+				Address:     info.Address,
 			})
 			if err != nil {
 				c.JSON(500, gin.H{

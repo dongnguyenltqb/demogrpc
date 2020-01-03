@@ -22,12 +22,12 @@ func (*user_service) UserLogin(ctx context.Context, in *rpc.Credentials) (*rpc.L
 		},
 	}, nil
 }
-func (*user_service) UserRegister(ctx context.Context, in *rpc.Credentials) (*rpc.LoginResult, error) {
+func (*user_service) UserRegister(ctx context.Context, in *rpc.FormRegister) (*rpc.RegisterResult, error) {
 	fmt.Println(in)
-	return &rpc.LoginResult{
+	return &rpc.RegisterResult{
 		Ok: true,
 		Data: &rpc.AccessToken{
-			AccessToken: "regisger.... == >>>>>   !23,",
+			AccessToken: "regisger.... == >>>>>   !23@@,",
 		},
 	}, nil
 }
