@@ -2,7 +2,7 @@ package main
 
 import (
 	"demogrpc/entity"
-	"demogrpc/rpc"
+	"demogrpc/proto-gen/rpc"
 	server "demogrpc/server"
 	"fmt"
 	"log"
@@ -20,6 +20,7 @@ func runGRPCServer() {
 	var (
 		user = entity.NewUserGRPCService()
 	)
+
 	// create a server instance and register service to server
 	grpcServer := grpc.NewServer()
 	rpc.RegisterUserServer(grpcServer, user)

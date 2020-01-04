@@ -1,6 +1,8 @@
 syntax  = "proto3";
 
-package rpc;
+package message;
+option go_package = "demogrpc/proto-gen/message";
+
 
 message AccessToken{
     string access_token = 1;
@@ -28,4 +30,8 @@ message FormRegister{
 message RegisterResult{
     bool ok  = 1;
     AccessToken data = 2;
+}
+
+message UpdateUserData{
+  FormRegister data  = 1;
 }

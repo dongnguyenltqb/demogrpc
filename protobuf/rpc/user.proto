@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package rpc;
+
+option go_package="demogrpc/proto-gen/rpc";
+
+import "message/user.proto";
+
+service User{
+    rpc UserLogin(message.Credentials) returns (message.LoginResult){};
+    rpc UserRegister(message.FormRegister) returns (message.RegisterResult){};
+}

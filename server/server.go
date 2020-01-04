@@ -2,7 +2,8 @@ package server
 
 import (
 	"context"
-	"demogrpc/rpc"
+	"demogrpc/proto-gen/message"
+	"demogrpc/proto-gen/rpc"
 	"fmt"
 	"log"
 
@@ -57,7 +58,7 @@ func Start() {
 				})
 				return
 			}
-			response, err := cli.UserLogin(context.Background(), &rpc.Credentials{
+			response, err := cli.UserLogin(context.Background(), &message.Credentials{
 				Username: cre.Email,
 				Password: cre.Password,
 			})
@@ -81,7 +82,7 @@ func Start() {
 				})
 				return
 			}
-			response, err := cli.UserRegister(context.Background(), &rpc.FormRegister{
+			response, err := cli.UserRegister(context.Background(), &message.FormRegister{
 				FirstName:   info.FirstName,
 				LastNane:    info.LastName,
 				Email:       info.Email,
