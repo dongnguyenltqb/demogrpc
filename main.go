@@ -2,6 +2,7 @@ package main
 
 import (
 	"demogrpc/entity"
+	"demogrpc/model"
 	server "demogrpc/server"
 	"fmt"
 	"log"
@@ -33,6 +34,7 @@ func runGRPCServer() {
 }
 
 func main() {
+	go model.InitConnection()
 	go server.Start()
 	runGRPCServer()
 }

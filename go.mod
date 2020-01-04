@@ -7,6 +7,7 @@ replace share-proto => ../share-proto
 require (
 	github.com/gin-gonic/gin v1.5.0
 	github.com/golang/protobuf v1.3.2
+	github.com/lib/pq v1.3.0
 	google.golang.org/grpc v1.26.0
 	share-proto v0.0.0-00010101000000-000000000000
 )
