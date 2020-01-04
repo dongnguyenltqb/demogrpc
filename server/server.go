@@ -84,7 +84,7 @@ func Start() {
 			}
 			response, err := cli.UserRegister(context.Background(), &message.FormRegister{
 				FirstName:   info.FirstName,
-				LastNane:    info.LastName,
+				LastName:    info.LastName,
 				Email:       info.Email,
 				Password:    info.Password,
 				PhoneNumber: info.PhoneNumber,

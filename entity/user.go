@@ -32,3 +32,17 @@ func (*user_service) UserRegister(ctx context.Context, in *message.FormRegister)
 	}, nil
 
 }
+
+func (*user_service) GetUserDataByUserName(ctx context.Context, in *message.UserName) (*message.GetUserDataByUserNameResult, error) {
+	return &message.GetUserDataByUserNameResult{
+		Ok:    true,
+		Error: "",
+	}, nil
+}
+
+func (*user_service) UpdateUserDataByUserName(ctx context.Context, in *message.UpdateUserDataByUserName) (*message.UpdateUserDataByUserNameResult, error) {
+	return &message.UpdateUserDataByUserNameResult{
+		Ok:    true,
+		Error: "",
+	}, nil
+}
