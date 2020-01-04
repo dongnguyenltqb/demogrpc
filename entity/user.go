@@ -2,8 +2,8 @@ package entity
 
 import (
 	"context"
-	"demogrpc/proto-gen/message"
 	"fmt"
+	"share-proto/proto-gen/message"
 )
 
 type user_service struct {

@@ -2,11 +2,11 @@ package main
 
 import (
 	"demogrpc/entity"
-	"demogrpc/proto-gen/rpc"
 	server "demogrpc/server"
 	"fmt"
 	"log"
 	"net"
+	"share-proto/proto-gen/rpc"
 
 	"google.golang.org/grpc"
 )

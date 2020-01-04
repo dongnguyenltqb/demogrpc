@@ -2,10 +2,10 @@ package server
 
 import (
 	"context"
-	"demogrpc/proto-gen/message"
-	"demogrpc/proto-gen/rpc"
 	"fmt"
 	"log"
+	"share-proto/proto-gen/message"
+	"share-proto/proto-gen/rpc"
 
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
