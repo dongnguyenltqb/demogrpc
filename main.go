@@ -1,7 +1,17 @@
 package main
 
-import "demogrpc/server"
+import (
+	"demogrpc/server"
+	"fmt"
+	"os"
+	"strconv"
+)
 
 func main() {
-	server.New(7777)
+	PORT_STR := os.Getenv("PORT")
+	port, err := strconv.Atoi(PORT_STR)
+	if err != nil {
+		panic(fmt.Errorf("PORT must be valid integer: %s", err.Error()))
+	}
+	server.New(port)
 }
