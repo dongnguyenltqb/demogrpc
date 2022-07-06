@@ -6,43 +6,20 @@ import (
 	"share-proto/proto-gen/message"
 )
 
-type user_service struct {
+type UserService struct {
 }
 
-func NewUserGRPCService() *user_service {
-	return &user_service{}
+func NewUserGRPCService() *UserService {
+	return &UserService{}
 }
 
-func (*user_service) UserLogin(ctx context.Context, in *message.Credentials) (*message.LoginResult, error) {
+func (*UserService) Login(ctx context.Context, in *message.LoginRequest) (*message.LoginResponse, error) {
 	fmt.Println(in)
-	return &message.LoginResult{
-		Ok: true,
+	return &message.LoginResponse{
+		Success: true,
 		Data: &message.AccessToken{
-			AccessToken: "Login sucessfully..... here is token xxxxxx",
+			AccessToken:  "access",
+			RefreshToken: "refresh",
 		},
-	}, nil
-}
-func (*user_service) UserRegister(ctx context.Context, in *message.FormRegister) (*message.RegisterResult, error) {
-	fmt.Println(in)
-	return &message.RegisterResult{
-		Ok: true,
-		Data: &message.AccessToken{
-			AccessToken: "Register sucessfully..... here is token xxxxxx",
-		},
-	}, nil
-
-}
-
-func (*user_service) GetUserDataByUserName(ctx context.Context, in *message.UserName) (*message.GetUserDataByUserNameResult, error) {
-	return &message.GetUserDataByUserNameResult{
-		Ok:    true,
-		Error: "",
-	}, nil
-}
-
-func (*user_service) UpdateUserDataByUserName(ctx context.Context, in *message.UpdateUserDataByUserName) (*message.UpdateUserDataByUserNameResult, error) {
-	return &message.UpdateUserDataByUserNameResult{
-		Ok:    true,
-		Error: "",
 	}, nil
 }
