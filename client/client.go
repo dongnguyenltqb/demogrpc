@@ -13,15 +13,14 @@ type Client struct {
 	User rpc.UserClient
 }
 
-func New(port int) *Client {
+func New(address string) *Client {
 	certFile := os.Getenv("CERT_PATH")
 	fmt.Println("certFile: ", certFile)
-	creds, err := credentials.NewClientTLSFromFile(certFile, "dongnguyen.dev")
+	creds, err := credentials.NewClientTLSFromFile(certFile, os.Getenv("CERT_SERVER_NAME"))
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("connecting to :", port)
-	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", port), grpc.WithTransportCredentials(creds))
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(creds))
 	if err != nil {
 		panic(err)
 	}

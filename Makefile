@@ -4,7 +4,7 @@ develop:
 	@PORT=7777 CERT_PATH=$$PWD/cert/server.crt KEY_PATH=$$PWD/cert/server.key air
 
 test:
-	@CERT_PATH=$$PWD/cert/server.crt KEY_PATH=$$PWD/cert/server.key go test client/* -v
+	@SERVER_ADDR=home.spiritlabs.co:1234 CERT_SERVER_NAME=dongnguyen.dev CERT_PATH=$$PWD/cert/server.crt KEY_PATH=$$PWD/cert/server.key go test client/* -v
 
 build:
 	@go mod download
