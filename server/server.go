@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"path"
-	"runtime"
+	"os"
 	"share-proto/proto-gen/rpc"
 
 	"google.golang.org/grpc"
@@ -24,12 +23,8 @@ func New(port int) {
 	)
 
 	// create a server instance and register service to server
-	_, filename, _, ok := runtime.Caller(0)
-	if !ok {
-		panic("unable to get the current filename")
-	}
-	certFile := path.Join(filename, "../../cert/server.crt")
-	keyFile := path.Join(filename, "../../cert/server.key")
+	certFile := os.Getenv("CERT_PATH")
+	keyFile := os.Getenv("KEY_PATH")
 	fmt.Println("cert file path")
 	fmt.Println(certFile)
 	fmt.Println(keyFile)

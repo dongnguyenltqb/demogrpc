@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	"os"
 	"share-proto/proto-gen/rpc"
 
 	"google.golang.org/grpc"
@@ -13,7 +14,7 @@ type Client struct {
 }
 
 func New(port int) *Client {
-	certFile := "/home/dong/Desktop/learn-grpc/demogrpc/cert/server.crt"
+	certFile := os.Getenv("CERT_PATH")
 	fmt.Println("certFile: ", certFile)
 	creds, err := credentials.NewClientTLSFromFile(certFile, "dongnguyen.dev")
 	if err != nil {
