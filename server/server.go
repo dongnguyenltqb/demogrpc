@@ -32,7 +32,7 @@ func New(port int) {
 	if err != nil {
 		panic(err)
 	}
-	grpcServer := grpc.NewServer(grpc.Creds(creds))
+	grpcServer := grpc.NewServer(grpc.Creds(creds), grpc.UnaryInterceptor(Authenticate))
 	rpc.RegisterUserServer(grpcServer, user)
 
 	// start the server
