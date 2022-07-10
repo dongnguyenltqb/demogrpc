@@ -14,8 +14,7 @@ func TestLogin(t *testing.T) {
 		Password: "nguyen huu",
 	})
 	if err != nil {
-		fmt.Println(err)
-		return
+		t.Error(err)
 	}
 	fmt.Printf("%+v", response)
 }

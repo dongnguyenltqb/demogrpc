@@ -2,10 +2,10 @@ package client
 
 import (
 	"fmt"
-	"log"
 	"share-proto/proto-gen/rpc"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 type Client struct {
@@ -13,9 +13,16 @@ type Client struct {
 }
 
 func New(port int) *Client {
-	conn, err := grpc.Dial(fmt.Sprintf(":%d", port), grpc.WithInsecure())
+	certFile := "/home/dong/Desktop/learn-grpc/demogrpc/cert/server.crt"
+	fmt.Println("certFile: ", certFile)
+	creds, err := credentials.NewClientTLSFromFile(certFile, "dongnguyen.dev")
 	if err != nil {
-		log.Fatalf("error connect: %s", err)
+		panic(err)
+	}
+	fmt.Println("connecting to :", port)
+	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", port), grpc.WithTransportCredentials(creds))
+	if err != nil {
+		panic(err)
 	}
 
 	return &Client{

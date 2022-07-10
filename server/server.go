@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"path"
+	"runtime"
 	"share-proto/proto-gen/rpc"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 func New(port int) {
@@ -21,7 +24,20 @@ func New(port int) {
 	)
 
 	// create a server instance and register service to server
-	grpcServer := grpc.NewServer()
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		panic("unable to get the current filename")
+	}
+	certFile := path.Join(filename, "../../cert/server.crt")
+	keyFile := path.Join(filename, "../../cert/server.key")
+	fmt.Println("cert file path")
+	fmt.Println(certFile)
+	fmt.Println(keyFile)
+	creds, err := credentials.NewServerTLSFromFile(certFile, keyFile)
+	if err != nil {
+		panic(err)
+	}
+	grpcServer := grpc.NewServer(grpc.Creds(creds))
 	rpc.RegisterUserServer(grpcServer, user)
 
 	// start the server
